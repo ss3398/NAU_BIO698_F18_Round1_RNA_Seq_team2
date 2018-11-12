@@ -1,0 +1,54 @@
+Angelique 	ak658@nau.edu
+Amelia  	als852@nau.edu
+Maxx 		Maxx.Harvey@nau.edu
+Sam			samsarkar@nau.edu
+
+
+k_table.csv
+expression information for each sample type (i.e. bacterial isolate + condition) and for each transcript in the genome
+each sample type was run in triplicate. The replicates can be identified because they all have the same name ("sample" column), with the exception of the final identifier following the "_". "ACS-TG22182subaTX-xx-uu-USA-xxxx-077-JB_S7", "ACS-TG22182subaTX-xx-uu-USA-xxxx-077-JB_S8", and "ACS-TG22182subaTX-xx-uu-USA-xxxx-077-JB_S10" are three replicates of a single sample type.
+
+Columns of interest within this file include sample replicate name (sample) transcript name (target_id), normalized read counts for each transcript (est_count), drug resistance information (resistance_profile), and treatment type (treatment)
+
+
+"s_table.csv" is a csv file containing the output of a statistical analysis comparing levels of transcript expression from the different isolates/conditions. Columns of interest include: the name of the differentially expressed transcript (target_id), the p-value (pval) and the adjusted p-vaule (qval).
+
+There is also one "abundance.tsv" file for each bioreplicate organized within a set of directories starting with the 'indiv_replicates' directory and including one subdirectory for each bioreplicate. These tab-delimited files contain the raw output from kallisto (an RNA-seq analysis algorithm). Info from these files were combined to form "k\table.csv".
+
+(1)
+Read in the data from "k_table.csv" and "s_table.csv", and generate a new tab-delimited output file containing a subset of the columns from these two input files, as well as a few new columns with summary statistics. The output file should be called "Output.txt" and should include the following columns:
+
+"target_id" (from s_table)
+"pval" (from s_table)
+"qval" (from s_table)
+"sigma_sq" (from s_table)
+Mean est_count for each sample type (4 columns in total, calculated using all replicates from k_table)
+Standard deviation in est_count for each sample type (4 columns in total, calculated using all replicates from k_table)
+
+(2) 
+For the transcript with the lowest p-value in "s_table.csv", generate a boxplot displaying normalized read counts for each sample contained within "k_table.csv" (i.e., one box per sample generated using all three replicates for each sample).
+
+Add option to your script for est_count data to be read in from the individual abundance.tsv files (1 per replicate), instead of from k_table.
+
+#!/bin/env python
+
+#ktable = 'ktablesample_short.csv'
+InFile = open('ktablesample_short.csv')
+
+#Goal = setup a dictionary for each file where keys are identical
+
+Counter = 0
+K_Dictionary = {}
+for Line in InFile:
+    Counter = Counter+1
+    E = Line.split(',')
+    if Counter > 1: 
+        if E[1] in K_Dictionary.keys(): 
+         #K_Dictionary[E[1]] = {}
+         K_Dictionary[E[1]][E[2]] = E[3]
+        else:
+            K_Dictionary[E[1]]={}
+            K_Dictionary[E[1]][E[2]] = E[3]
+
+print(len(K_Dictionary['NODE_1_length_12210_cov_59.6595_g0_i0']))
+
