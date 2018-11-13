@@ -20,3 +20,5 @@ Moving Output.txt to current directory
 mv /var/lib/mysql-files/Output.txt Output.txt 
 mv /var/lib/mysql-files/readcounts.txt readcounts.txt 
 
+./box.py
+

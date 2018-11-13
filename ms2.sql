@@ -26,7 +26,19 @@ from k_s_table;
 
 select 'target_id','sample','est_counts'
 union all
-select target_id,substr(sample,locate('_S',sample,length(sample)-5)+1),est_counts 
+select target_id,
+(case substr(sample,locate('_S',sample,length(sample)-5)+1) 
+when 'S1' then 'Sample 1' 
+when 'S2' then 'Sample 1' 
+when 'S3' then 'Sample 1' 
+when 'S7' then 'Sample 2' 
+when 'S10' then 'Sample 2' 
+when 'S8' then 'Sample 2' 
+when 'S11' then 'Sample 3' 
+when 'S9' then 'Sample 3'
+when 'S12' then 'Sample 3' 
+else 'Sample 4' end) sample,
+est_counts 
 into outfile '/var/lib/mysql-files/readcounts.txt' fields terminated by ',' lines terminated by '\n' 
 from k_table where target_id in (select target_id from S_TABLE where pval = (select min(pval) from S_TABLE));
 
