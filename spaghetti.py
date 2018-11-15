@@ -32,7 +32,15 @@ for sample, value in k_dictionary:
       area3.append(value2)
     else:
       area4.append(value2)
+    if sample in Stab_Dictionary.keys():
 
-    stabval = Stab_Dictionary[sample]
-    
-outfile.write(sample + "\t" + np.mean(area1) + "\t" + np.mean(area2) + "\t" + np.mean(area3) + "\t" + np.mean(area4) + "\t" + np.sd(area1) + "\t" + np.sd(area2) + "\t" + np.sd(area3) + "\t" + np.sd(area4) + "\t" + stabval[0] + "\t" + stabval[1] + "\t" + stabval[2] + "\n")
+        stabval = Stab_Dictionary[sample]
+        pval = stabval[0]
+        qval = stabval[1]
+        sigma = stabval[2]
+    else:
+        pval = "NaN"
+        qval = "NaN"
+        sigma = "NaN"
+
+outfile.write(sample + "\t" + np.mean(area1) + "\t" + np.mean(area2) + "\t" + np.mean(area3) + "\t" + np.mean(area4) + "\t" + np.sd(area1) + "\t" + np.sd(area2) + "\t" + np.sd(area3) + "\t" + np.sd(area4) + "\t" + pval + "\t" + qval + "\t" + sigma + "\n")
